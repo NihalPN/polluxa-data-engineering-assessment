@@ -36,7 +36,7 @@ jobs:
       run: |
         python ingestion_pipeline.py
         python build_star_schema.py
-        python risk_model_etl.py
+        python anomaly_risk_model.py
 
     - name: Build Docker Container
       run: |
