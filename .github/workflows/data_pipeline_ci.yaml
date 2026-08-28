@@ -1,0 +1,43 @@
+name: Polluxa Data Pipeline CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install flake8 pytest
+
+    - name: Run Linter (Code Quality Check)
+      run: |
+        # Stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+    - name: Run Pipeline Dry-Run (Integration Test)
+      env:
+        POLLUXA_API_TOKEN: ${{ secrets.POLLUXA_API_TOKEN }}
+      run: |
+        python ingestion_pipeline.py
+        python build_star_schema.py
+        python anomaly_risk_model.py
+
+    - name: Build Docker Container
+      run: |
+        docker build -t polluxa-agent-pipeline:latest .
