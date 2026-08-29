@@ -44,7 +44,7 @@ pip install -r requirements.txt
 python ingestion_pipeline.py
 python build_star_schema.py
 python anomaly_risk_model.py
-
+```
 ### 📊 Connecting the Power BI Dashboard
 The Power BI dashboard (`LinkedIn_Agent_Analytics.pbix`) is built using **Import Mode**. When you open the file, you will immediately see the cached data and visuals. 
 
