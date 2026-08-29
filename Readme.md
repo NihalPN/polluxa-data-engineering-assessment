@@ -44,3 +44,13 @@ pip install -r requirements.txt
 python ingestion_pipeline.py
 python build_star_schema.py
 python anomaly_risk_model.py
+
+### 📊 Connecting the Power BI Dashboard
+The Power BI dashboard (`LinkedIn_Agent_Analytics.pbix`) is built using **Import Mode**. When you open the file, you will immediately see the cached data and visuals. 
+
+If you run the Python pipeline to generate new data and wish to hit **Refresh** in Power BI, you must first update the data source path to match your local machine:
+1. Open the `.pbix` file in Power BI Desktop.
+2. On the Home ribbon, click **Transform Data** > **Data Source Settings**.
+3. Select the SQLite database connection and click **Change Source**.
+4. Browse to the exact location of the `analytics_platform.db` file on your local machine.
+5. Click **OK**, then **Close**, and hit **Refresh** on the main dashboard.
